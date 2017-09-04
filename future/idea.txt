@@ -1,0 +1,1 @@
+instead of ciricles, just draw lines, and then smooth them down.
