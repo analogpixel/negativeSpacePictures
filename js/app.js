@@ -5,6 +5,7 @@ var pixelHeight = 15;
 var overlap = 3;
 var subPercent=0;
 var invert=true;
+var flatEdges =true;
 
 function map_range(value, low1, high1, low2, high2) {
     return low2 + (high2 - low2) * (value - low1) / (high1 - low1);
@@ -46,17 +47,25 @@ $(  function() {
 			}
 			
 			
-			var tmp1 = new Path.Ellipse( {center: [x*pixelWidth, y*pixelHeight-overlap], size: [pw, pixelHeight+(overlap*2)]} );
-			tmp1.fillColor='green';
-			
-			var tmp2 = new Path.Rectangle((x * pixelWidth)+rectWidth,0, 10, canvas.height, {insert: false} )
+			var tmp2 = new Path.Rectangle((x * pixelWidth)+rectWidth,0, 10, canvas.height )
 			tmp2.fillColor='red';
 
-			sideRect = sideRect.unite( tmp1 ).subtract( tmp2);
+			if (flatEdges) {
+			  var tmp1 = new Path.Ellipse( {center: [x*pixelWidth, y*pixelHeight-overlap], size: [pw, pixelHeight+(overlap*2)]} ).subtract(tmp2);
+			} else {
+			  var tmp1 = new Path.Ellipse( {center: [x*pixelWidth, y*pixelHeight-overlap], size: [pw, pixelHeight+(overlap*2)]} );
+			}
+
+			tmp1.fillColor='green';
+			
+			
+
+			sideRect = sideRect.unite( tmp1 );
 			tmp1.remove();
 			tmp2.remove();
 		}
 		
+		sideRect.simplify(.2);
 	}
  } );
 
