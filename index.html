@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Pillar Picture</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/paper.js/0.11.3/paper-full.min.js"></script>
+	<script type="text/paperscript" src="js/app.js" canvas="myCanvas"></script>
+
+	<script>
+	var downloadAsSVG = function (fileName) {
+	   if(!fileName) {
+	       fileName = "paperjs_example.svg"
+	   }
+
+	   var url = "data:image/svg+xml;utf8," + encodeURIComponent(paper.project.exportSVG({asString:true}));
+
+	   var link = document.createElement("a");
+	   link.download = fileName;
+	   link.href = url;
+	   link.click();
+		}
+	</script>
+
+</head>
+<body>
+	<canvas id="myCanvas" resize></canvas>
+	<img src=small.jpg id="my-image">
+	<script src="js/jquery-3.2.1.min.js"></script>
+	<button onclick="downloadAsSVG()">Download</button>
+
+</body>
+</html>
